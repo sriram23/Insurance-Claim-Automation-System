@@ -1,5 +1,6 @@
 # Insurance Claim Assessment Automation
 Domain: Robotic Process Automation
+
 Tools Used: UiPATH - Community Edition
 
 ## Team Members
