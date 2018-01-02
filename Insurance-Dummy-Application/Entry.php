@@ -11,7 +11,17 @@ echo "<!-- Angular -->
 echo "</head>";
 echo "<body>";
 	$id = $_POST['Iid'];
-	echo "<script>alert($id);</script>";
+	$contact = $_POST['pno'];
+	$name = $_POST['name'];
+	$date = $_POST['date'];
+	$vno = $_POST['vNo'];
+	$make = $_POST['make'];
+	$location = $_POST['location'];
+	$extent = $_POST['extent'];
+	$desc = $_POST['desc'];
+	$garage = $_POST['Gname'];
+
+	echo "<script>alert($id,$contact,$name,$date,$vno,$make,$location,$extent,$desc,$garage);</script>";
 
 	//Database Connectivity
 
@@ -28,7 +38,7 @@ if ($conn->connect_error) {
     echo "<script>alert(Connection Failed);</script>";
 }
 
-	$sql = "INSERT INTO insureid (id) VALUES ($id)";
+	$sql = "INSERT INTO insureid (insuranceId,contact,name,date,vehicleNumber,vehicleMake,location,extent,description,garageName) VALUES ('$id','$contact','$name','$date','$vno','$make','$location','$extent','$desc','$garage')";
 
 	if ($conn->query($sql) === TRUE) {
 	    echo "New record created successfully";
@@ -37,9 +47,8 @@ if ($conn->connect_error) {
 	}
 $conn->close();
 
-
 echo "<form action=fetch.php method=post>";
-echo "<input type=submit value=GetValues class='btn-success'>";
+echo "<input type=submit value=GetValues class='btn btn-success'>";
 echo "</form>";
 echo "</body>";
 echo "</html>";

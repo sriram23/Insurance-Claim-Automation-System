@@ -17,15 +17,73 @@ $pwd = $_POST['Password-edit'];
 
 if($name == "user" && $pwd == 123){
 	echo "Hello ".$name."!";	
-	echo "<div class=row><div class=col-md-3 col-sm-3></div>
+	echo "<form action=Entry.php method=post>
+	<div class=row><div class=col-md-3 col-sm-3></div>
 		<div class=col-md-6 col-sm-6>
-			<form action=Entry.php method=post>
-				<label>Enter Insurance ID</label>
-				<input type=text class=form-control id=Iid name=Iid><br>
-				<input type=submit value=Store class='btn btn-primary'>
-			</form>
+				<label>Insurance ID</label>
+				<input type=text class=form-control id=Iid name=Iid>
 		</div>
-	</div>";
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Contact Number</label>
+				<input type=text class=form-control id=pno name=pno>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Name (Insured Person)</label>
+				<input type=text class=form-control id=name name=name>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Date/Time</label>
+				<input type=text class=form-control id=date name=date value='YYYY-MM-DD HH:MM:SS'>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Vehicle Number</label>
+				<input type=text class=form-control id=vNo name=vNo>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Make / Model</label>
+				<input type=text class=form-control id=make name=make>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Location</label>
+				<input type=text class=form-control id=location name=location>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Extent of loss</label>
+				<input type=text class=form-control id=extent name=extent>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Description</label>
+				<input type=text class=form-control id=desc name=desc>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+				<label>Garage Name</label>
+				<input type=text class=form-control id=Gname name=Gname>
+		</div>
+	</div>
+	<div class=row><div class=col-md-3 col-sm-3></div>
+		<div class=col-md-6 col-sm-6>
+			<input type=submit value=Store class='btn btn-primary'>
+		</div>
+	</div>
+	</form>";
 
 	echo "<div class=row><div class=col-md-3 col-sm-3></div>
 		<div class=col-md-6 col-sm-6>
