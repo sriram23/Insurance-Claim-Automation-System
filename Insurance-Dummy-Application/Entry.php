@@ -10,18 +10,63 @@ echo "<!-- Angular -->
 	<script src=https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js integrity=sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa crossorigin=anonymous></script>";
 echo "</head>";
 echo "<body>";
-	$id = $_POST['Iid'];
-	$contact = $_POST['pno'];
-	$name = $_POST['name'];
+	$policyNumber = $_POST['PolicyNumber'];
+	$vehicleNumber = $_POST['VehicleNumber'];
+	$name = $_POST['Name'];
+	$address = $_POST['Address'];
+	$city = $_POST['City'];
+	$pin = $_POST['Pin'];
+	$mobile = $_POST['Mobile'];
+	$landline = $_POST['Landline'];
+	$emailid = $_POST['Email'];
 	$date = $_POST['date'];
-	$vno = $_POST['vNo'];
-	$make = $_POST['make'];
-	$location = $_POST['location'];
-	$extent = $_POST['extent'];
-	$desc = $_POST['desc'];
-	$garage = $_POST['Gname'];
+	$place = $_POST['PlaceOfAccident'];
+	//$typeOfDamage = $_POST['TypeOfDamage'];
+	$description = $_POST['Description'];
+	$dname = $_POST['DName'];
+	$dage = $_POST['DAge'];
+	$dLicenseNo = $_POST['LicenseNo'];
+	$rto = $_POST['RTO'];
+	//$ll = $_POST['LL'];
+	$llFinal = "";
+	$damage = "";
+	$coPassengerDetail = $_POST['CoPassenger'];
+	if (isset($_POST['TypeOfLoss'])) {
+		$typeOfDamage = $_POST['TypeOfLoss'];
+		echo "TYPE OF LOSS:";
+		foreach ($typeOfDamage as $type1) {
+			$damage = $damage.$type1;
+			echo $damage."<br>";
+		}
+	}
 
-	echo "<script>alert($id,$contact,$name,$date,$vno,$make,$location,$extent,$desc,$garage);</script>";
+	if (isset($_POST['LL'])) {
+		$ll = $_POST['LL'];
+		echo "LL:";
+		foreach ($ll as $llr) {
+			echo $llr."<br>";
+		}
+	}
+
+	echo $policyNumber."<br>";
+	echo $vehicleNumber."<br>";
+	echo $name."<br>";
+	echo $address."<br>";
+	echo $city."<br>";
+	echo $pin."<br>";
+	echo $mobile."<br>";
+	echo $landline."<br>";
+	echo $emailid."<br>";
+	echo $date."<br>";
+	echo $place."<br>";
+	//echo $typeOfDamage."<br>";
+	echo $description."<br>";
+	echo $dname."<br>";
+	echo $dage."<br>";
+	echo $dLicenseNo."<br>";
+	echo $rto."<br>";
+	//echo $ll."<br>";
+	echo $coPassengerDetail."<br>";
 
 	//Database Connectivity
 
@@ -38,7 +83,7 @@ if ($conn->connect_error) {
     echo "<script>alert(Connection Failed);</script>";
 }
 
-	$sql = "INSERT INTO insureid (insuranceId,contact,name,date,vehicleNumber,vehicleMake,location,extent,description,garageName) VALUES ('$id','$contact','$name','$date','$vno','$make','$location','$extent','$desc','$garage')";
+	$sql = "INSERT INTO insuranceautomation (PolicyNumber,VehicleNumber,Name,Address,City,Pin,Mobile,Landline,Email,Date,Place,Typeofloss,Description,Dname,Dage,DLicense,RTO,LL,Copassenger) VALUES ('$policyNumber','$vehicleNumber','$name','$address','$city','$pin','$mobile','$landline','$emailid','$date','$place','$damage',$description,'$dname','$dage','$dLicenseNo','$rto','$llr','$coPassengerDetail')";
 
 	if ($conn->query($sql) === TRUE) {
 	    echo "New record created successfully";

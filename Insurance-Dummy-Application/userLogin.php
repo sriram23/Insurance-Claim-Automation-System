@@ -109,13 +109,13 @@ if($name == "user" && $pwd == 123){
     					<label>Type of Loss</label>
     				</div>
     				<div class=col-md-3>
-    					<label class=checkbox-inline><input type=checkbox name=OwnDamage>Own Damage</label>
+    					<label class=checkbox-inline><input type=checkbox value='Own Damage' name=TypeOfLoss[]>Own Damage</label>
     				</div>
     				<div class=col-md-3>
-	  					<label class=checkbox-inline><input type=checkbox name=Theft>Theft</label>
+	  					<label class=checkbox-inline><input type=checkbox value=Theft name=TypeOfLoss[]>Theft</label>
 	  				</div>
 	  				<div class=col-md-3>
-						<label class=checkbox-inline><input type=checkbox name=ThirdParty>*Third Party</label>
+						<label class=checkbox-inline><input type=checkbox value=Third Party name=TypeOfLoss[]>*Third Party</label>
 					</div>
 				</div>
 				<div class=row>
@@ -159,10 +159,10 @@ if($name == "user" && $pwd == 123){
                         <label>Learners License</label>
                     </div>
                     <div class=col-md-4>
-                        <label class=checkbox-inline><input type=checkbox name=LLYes>Yes</label>
+                        <label class=checkbox-inline><input type=checkbox value=YES name=LL[]>Yes</label>
                     </div>
                     <div class=col-md-4>
-                        <label class=checkbox-inline><input type=checkbox name=LLNo>No</label>
+                        <label class=checkbox-inline><input type=checkbox value=NO name=LL[]>No</label>
                     </div>
                 </div>
                 <div class=row>
