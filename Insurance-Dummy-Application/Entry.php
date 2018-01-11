@@ -36,7 +36,7 @@ echo "<body>";
 		echo "TYPE OF LOSS:";
 		foreach ($typeOfDamage as $type1) {
 			$damage = $damage.$type1;
-			echo $damage."<br>";
+			//echo $damage."<br>";
 		}
 	}
 
@@ -44,30 +44,9 @@ echo "<body>";
 		$ll = $_POST['LL'];
 		echo "LL:";
 		foreach ($ll as $llr) {
-			echo $llr."<br>";
+			//echo $llr."<br>";
 		}
 	}
-
-	echo $policyNumber."<br>";
-	echo $vehicleNumber."<br>";
-	echo $name."<br>";
-	echo $address."<br>";
-	echo $city."<br>";
-	echo $pin."<br>";
-	echo $mobile."<br>";
-	echo $landline."<br>";
-	echo $emailid."<br>";
-	echo $date."<br>";
-	echo $place."<br>";
-	//echo $typeOfDamage."<br>";
-	echo $description."<br>";
-	echo $dname."<br>";
-	echo $dage."<br>";
-	echo $dLicenseNo."<br>";
-	echo $rto."<br>";
-	//echo $ll."<br>";
-	echo $coPassengerDetail."<br>";
-
 	//Database Connectivity
 
 $servername = "localhost";
@@ -83,7 +62,7 @@ if ($conn->connect_error) {
     echo "<script>alert(Connection Failed);</script>";
 }
 
-	$sql = "INSERT INTO insuranceautomation (PolicyNumber,VehicleNumber,Name,Address,City,Pin,Mobile,Landline,Email,Date,Place,Typeofloss,Description,Dname,Dage,DLicense,RTO,LL,Copassenger) VALUES ('$policyNumber','$vehicleNumber','$name','$address','$city','$pin','$mobile','$landline','$emailid','$date','$place','$damage',$description,'$dname','$dage','$dLicenseNo','$rto','$llr','$coPassengerDetail')";
+	$sql = "INSERT INTO insuranceautomation (PolicyNumber,VehicleNumber,Name,Address,City,Pin,Mobile,Landline,Email,Date,Place,Typeofloss,Description,Dname,Dage,DLicense,RTO,LL,Copassenger) VALUES ('$policyNumber','$vehicleNumber','$name','$address','$city','$pin','$mobile','$landline','$emailid','$date','$place','$damage','$description','$dname','$dage','$dLicenseNo','$rto','$llr','$coPassengerDetail')";
 
 	if ($conn->query($sql) === TRUE) {
 	    echo "New record created successfully";
