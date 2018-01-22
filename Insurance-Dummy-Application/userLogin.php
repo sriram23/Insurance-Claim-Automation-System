@@ -94,8 +94,8 @@ if($name == "user" && $pwd == 123){
     		<div class=panel-body>
     			<div class=row>
     				<div class=col-md-6>
-    					<label>Date & Time</label>
-    					<input type=text value='MM/DD/YYYY HH:MM:SS' class=form-control name=date>
+    					<label>Date</label>
+    					<input type=text value='MM/DD/YYYY' class=form-control name=date>
     				</div>
     			</div>
     			<div class=row>
