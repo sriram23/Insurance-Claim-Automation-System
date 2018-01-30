@@ -9,6 +9,7 @@
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
  xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:snm="clr-namespace:System.Net.Mail;assembly=System"
  xmlns:ui="http://schemas.uipath.com/workflow/activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
@@ -34,6 +35,13 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Framework.Activities</x:String>
       <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Mail.Activities.Design</x:String>
+      <x:String>System.Windows.Media.Composition</x:String>
+      <x:String>System.Windows.Media.Animation</x:String>
+      <x:String>System.Windows</x:String>
+      <x:String>System.Windows.Controls</x:String>
+      <x:String>System.Windows.Media</x:String>
+      <x:String>System.Windows.Threading</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -57,6 +65,8 @@
       <AssemblyReference>UiPath.Framework.Activities</AssemblyReference>
       <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Windows.Presentation</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart DisplayName="Main" sap2010:WorkflowViewState.IdRef="Flowchart_1">
@@ -211,8 +221,19 @@
                   <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                     <TryCatch.Try>
                       <Sequence sap2010:WorkflowViewState.IdRef="Sequence_33">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="ui:GenericValue" Name="today" />
+                        </Sequence.Variables>
                         <Delay Duration="00:00:05" sap2010:WorkflowViewState.IdRef="Delay_3" />
                         <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Warn" Message="5 sec delay" />
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_14">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="ui:GenericValue">[today]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="ui:GenericValue">[System.DateTime.Now.ToString("yyyy-MM-dd")]</InArgument>
+                          </Assign.Value>
+                        </Assign>
                         <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope - Claim" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_5" WorkbookPath="ClaimData.xlsx">
                           <ui:ExcelApplicationScope.Body>
                             <ActivityAction x:TypeArguments="ui:WorkbookApplication">
@@ -223,8 +244,46 @@
                                 <Sequence.Variables>
                                   <Variable x:TypeArguments="ui:Window" Name="Workbook" />
                                 </Sequence.Variables>
+                                <ui:ForEachRow DataTable="[ExtractDataTable]" DisplayName="For each row" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                                  <ui:ForEachRow.Body>
+                                    <ActivityAction x:TypeArguments="sd:DataRow">
+                                      <ActivityAction.Argument>
+                                        <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
+                                      </ActivityAction.Argument>
+                                      <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                                        <Sequence.Variables>
+                                          <Variable x:TypeArguments="x:String" Name="temp" />
+                                          <Variable x:TypeArguments="sd:DataTable" Name="tempDT" />
+                                          <Variable x:TypeArguments="sd:DataRow" Name="tempRow" />
+                                        </Sequence.Variables>
+                                        <Assign sap2010:WorkflowViewState.IdRef="Assign_15">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:String">[temp]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:String">[row.Item(19).ToString]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                        <Assign sap2010:WorkflowViewState.IdRef="Assign_17">
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="sd:DataRow">[tempRow]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="sd:DataRow">[row]</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:ForEachRow.Body>
+                                </ui:ForEachRow>
                                 <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_17">
-                                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[ExtractDataTable]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1" StartingCell="A1" />
+                                  <ui:ExcelWriteRange AddHeaders="False" DataTable="[ExtractDataTable]" DisplayName="Write Range" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_3" SheetName="Sheet1">
+                                    <ui:ExcelWriteRange.StartingCell>
+                                      <InArgument x:TypeArguments="x:String">
+                                        <Literal x:TypeArguments="x:String" Value="" />
+                                      </InArgument>
+                                    </ui:ExcelWriteRange.StartingCell>
+                                  </ui:ExcelWriteRange>
                                   <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="Excel Sheet written" />
                                 </Sequence>
                                 <ui:WindowScope SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" ApplicationWindow="[Workbook]" DisplayName="Attach Window 'EXCEL.EXE ClaimData.xlsx'" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="7d19628a9ab6dba62bea32d58ffa5022" Selector="&lt;wnd app='excel.exe' cls='XLMAIN' title='ClaimData.xlsx - Excel (Product Activation Failed)' /&gt;">
@@ -269,6 +328,8 @@
                         <Variable x:TypeArguments="sd:DataTable" Name="dtMail" />
                         <Variable x:TypeArguments="x:String" Name="subjectMail" />
                         <Variable x:TypeArguments="x:String" Name="bodyMail" />
+                        <Variable x:TypeArguments="snm:Attachment" Name="Attach" />
+                        <Variable x:TypeArguments="snm:MailMessage" Name="mail" />
                       </Sequence.Variables>
                       <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="Start of mail" />
                       <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_2">
@@ -304,6 +365,7 @@
                               </ActivityAction.Argument>
                               <Sequence sap2010:WorkflowViewState.IdRef="Sequence_21">
                                 <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Warn" Message="Something Went Wrong while reading Excel" />
+                                <Delay Duration="00:00:05" sap2010:WorkflowViewState.IdRef="Delay_4" />
                                 <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel application scope" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_8" WorkbookPath="mail.xlsx">
                                   <ui:ExcelApplicationScope.Body>
                                     <ActivityAction x:TypeArguments="ui:WorkbookApplication">
@@ -334,6 +396,10 @@
                               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
                             </ActivityAction.Argument>
                             <Sequence DisplayName="Body" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="x:String" Name="text" />
+                                <Variable x:TypeArguments="ui:GenericValue" Name="mname" />
+                              </Sequence.Variables>
                               <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
                                 <Assign.To>
                                   <OutArgument x:TypeArguments="x:String">[mailid]</OutArgument>
@@ -358,13 +424,24 @@
                                   <InArgument x:TypeArguments="x:String">[row.Item(2).ToString]</InArgument>
                                 </Assign.Value>
                               </Assign>
-                              <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[&quot;Read &quot;+mailid+&quot; &quot;+subjectMail+&quot; &quot;+bodyMail]" />
-                              <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_13">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="ui:GenericValue">[mname]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="ui:GenericValue">[row.Item(3).ToString]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:ReadTextFile Content="[text]" DisplayName="Read text file" FileName="template.txt" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+                              <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[&quot;Text: &quot;+ String.Format(text,mname)]" />
+                              <ui:CommentOut DisplayName="Comment out" sap2010:WorkflowViewState.IdRef="CommentOut_3">
                                 <ui:CommentOut.Body>
-                                  <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_28">
-                                    <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[bodyMail]" DisplayName="Send Outlook Mail Message" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[subjectMail]" To="[mailid]">
+                                  <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                                    <ui:SendOutlookMail Account="{x:Null}" Bcc="{x:Null}" Cc="{x:Null}" MailMessage="{x:Null}" TimeoutMS="{x:Null}" Body="[String.Format(text,mname)]" DisplayName="Send Outlook Mail Message" sap2010:WorkflowViewState.IdRef="SendOutlookMail_1" IsBodyHtml="False" IsDraft="False" Subject="[subjectMail]" To="sriramsubramanian23@gmail.com">
                                       <ui:SendOutlookMail.Files>
-                                        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                        <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
+                                          <InArgument x:TypeArguments="x:String">Attachments/Claim.pdf</InArgument>
+                                        </scg:List>
                                       </ui:SendOutlookMail.Files>
                                     </ui:SendOutlookMail>
                                   </Sequence>
@@ -388,7 +465,10 @@
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>d0JDOlxVc2Vyc1xzcmlyYVxEb2N1bWVudHNcVWlQYXRoXEluc3VyYW5jZUNsYWltQXV0b21hdGlvblxNYWluLnhhbWx6PgOIAw8CAQFGOEZVAgECSwm6ARQCAWG9AQ3PARgCAVPSARGHAhwCATeKAhX6AiACAQNMC10mAwGFAV4LZRQDAYEBZgttFAIBfW4LdRQCAXl2C30UAgF1fguFARQCAXGGAQuGAZ8BAgFvhwELuQEcAgFivgEPzQEhAgFWzgEPzgGOAQIBVNMBE4YCHgIBOJECF5EClgECATWSAhfJAiICARzKAhf5AicCAQRMpgFMtQEDAYwBUhFaHAMBhgFjPWNaAwGEAWA+YEMDAYIBaz1rWgMBgAFoPmhEAgF+cz1zWgIBfHA+cEgCAXp7PXtaAgF4eD54SAIBdoMBNoMBUwIBdIABN4ABQQIBcoYBeIYBnAECAXCHAcEBhwHIAQIBbo0BEbYBHAIBY74BpgK+AfMCAgFgxAEVygEgAgFXzgF8zgGLAQIBVdUBF/YBIgIBPf4BG4ICJgIBOZEChAGRApMBAgE2lAIbqQImAgEosQIfxQIqAgEdygIwygI6AgEa0AId9gIoAgEFUxNZJwMBhwGOAROSASECAWuTAROXASECAWiYAROmAR4CAWanARO1AR4CAWTFARfJASgCAVjWARnWAWACAVHXARnXAZcBAgFP2AEZ9QE0AgE+/wEdgQIoAgE6lQIdlQKbAQIBM5YCHZYCZAIBMZcCHagCOAIBKbICIbICvAECASazAiHEAjwCAR7RAh/YAigCARbZAh/gAigCARLhAh/oAigCAQ7pAh/pAtwBAgEJ6gIf9AIvAgEI9QIf9QKaAQIBBlNCU0gDAYoBVhlWSAMBiQFTnwFTpwEDAYgBkAGmAZABhgICAW2OAbQCjgHAAgIBbJUBpgGVAdgBAgFqkwG0ApMBwAICAWmkAaYBpAHTAQIBZ7MBpgGzAeIBAgFlxQHZAsUB3gICAV/HAaoBxwHJAQIBXsUBjQHFAZIBAgFdxQFTxQFZAgFcxQFkxQF4AgFaxQHRAcUBlQICAVnWASnWATMCAVLXAYcB1wGUAQIBUNgBvAHYAcwBAgFO3gEf8gEqAgE/gAIfgAK6AQIBO5UCiwGVApgBAgE0lgItlgI3AgEylwK4AZcCwwECATCdAiOlAi4CASqyAo8BsgK5AQIBJ7MCvAGzAscBAgEluQInwQIyAgEf1gJK1gJgAgEZ0wJL0wJTAgEX3gJK3gJgAgEV2wJL2wJYAgET5gJK5gJgAgER4wJL4wJVAgEP6QKMAekC2QECAQr1AowB9QKXAQIBB+IBIeUBLAIBRuYBIfEBMgIBQIACjQGAArcBAgE8ngIlpAI5AgErugIpwAI9AgEg4wEj4wHeAQIBSeQBI+QBqAECAUfmAbcC5gGeAwIBReYBgQHmAY0BAgFD7AEn7gEyAgFBngJUngJeAgEuoQIroQJaAgEtngK1AZ4CvQECASy6Ali6AmICASO9Ai+9Al4CASK6ArkBugLBAQIBIeMB1wHjAdsBAgFN4wFU4wFoAgFL4wHBAeMByQECAUrkAZAB5AGlAQIBSO0BKe0BswICAUI=</sads:DebugSymbol.Symbol>
+    <FlowStep sap2010:WorkflowViewState.IdRef="FlowStep_12">
+      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_39" />
+    </FlowStep>
+    <sads:DebugSymbol.Symbol>d0JDOlxVc2Vyc1xzcmlyYVxEb2N1bWVudHNcVWlQYXRoXEluc3VyYW5jZUNsYWltQXV0b21hdGlvblxNYWluLnhhbWyOAUgD2AMPAgEBUDhQVQIBAlUJxAEUAgF5xwEN2QEYAgFr3AERwgIcAgE+xQIVxwMgAgEDVgtnJgMBnQFoC28UAwGZAXALdxQDAZUBeAt/FAMBkQGAAQuHARQDAY0BiAELjwEUAwGJAZABC5ABnwEDAYcBkQELwwEcAgF6yAEP1wEhAgFu2AEP2AGOAQIBbN0BE8ECHgIBP84CF84ClgECATzPAheHAyICASGIAxfGAycCAQRWpgFWtQEDAaQBXBFkHAMBngFtPW1aAwGcAWo+akMDAZoBdT11WgMBmAFyPnJEAwGWAX09fVoDAZQBej56SAMBkgGFAT2FAVoDAZABggE+ggFIAwGOAY0BNo0BUwMBjAGKATeKAUEDAYoBkAF4kAGcAQMBiAGRAcEBkQHIAQMBhgGXARHAARwCAXvIAaYCyAHzAgIBeM4BFdQBIAIBb9gBfNgBiwECAW3fARexAiICAUS5Ahu9AiYCAUDOAoQBzgKTAQIBPdECG+YCJgIBL+4CH4MDKgIBIogDMIgDOgIBH44DHcMDKAIBBV0TYycDAZ8BmAETnAEhAwGDAZ0BE6EBIQMBgAGiAROwAR4CAX6xARO/AR4CAXzPARfTASgCAXDjARnjAWACAWnkARnkAZcBAgFn5QEZ7AEiAgFj7QEZsAI0AgFFugIdvAIoAgFB0gId0gKbAQIBOtMCHdMCZAIBONQCHeUCOAIBMO8CIe8CvAECAS3wAiHwAmgCASvxAiGCAzwCASOTAx+aAygCARubAx+iAygCARejAx+qAygCAROrAx+yAygCAQ+zAx+zA6kBAgELtAMftAPBAQIBCbUDH8EDLwIBCMIDH8IDmgECAQZdQl1IAwGiAWAZYEgDAaEBXZ8BXacBAwGgAZoBpgGaAYYCAwGFAZgBtAKYAcACAwGEAZ8BpgGfAdgBAwGCAZ0BtAKdAcACAwGBAa4BpgGuAdMBAgF/vQGmAb0B4gECAX3PAdkCzwHeAgIBd9EBqgHRAckBAgF2zwGNAc8BkgECAXXPAVPPAVkCAXTPAWTPAXgCAXLPAdEBzwGVAgIBceMBKeMBMwIBauQBhwHkAZQBAgFo6gFL6gF3AgFm5wFM5wFTAgFk7QG8Ae0BzAECAWLzAR+tAioCAUa7Ah+7AroBAgFC0gKLAdICmAECATvTAi3TAjcCATnUArgB1ALDAQIBN9oCI+ICLgIBMe8CjwHvArkBAgEu8AIx8AI7AgEs8QK8AfECxwECASr3Aif/AjICASSYA0qYA2ACAR6VA0uVA1MCARygA0qgA2ACARqdA0udA1gCARioA0qoA2ACARalA0ulA1UCARSwA1GwA2cCARKtA1KtA1kCARCzA2ezA3UCAQ6zAzizA0ACAQy0A40BtAO+AQIBCsIDjAHCA5cBAgEH9wEhlgIxAgFVlwIhoAIsAgFNoQIhrAIyAgFHuwKNAbsCtwECAUPbAiXhAjkCATL4Ain+Aj0CASX3ATr3AU4CAWD9ASeTAjICAVaYAiOeAjgCAVCfAiOfAqgBAgFOoQK3AqECngMCAUyhAoEBoQKNAQIBSqcCJ6kCMgIBSNsCVNsCXgIBNd4CK94CWgIBNNsCtQHbAr0BAgEz+AJY+AJiAgEo+wIv+wJeAgEn+AK5AfgCwQECASaDAimKAjICAVyLAimSAjICAVebAimbAlgCAVSYAlSYAmgCAVKYAsEBmALJAQIBUZ8CkAGfAqUBAgFPqAIpqAKzAgIBSYgCVIgCawIBX4UCVYUCWwIBXZACVpACWwIBWo0CV40CYAIBWA==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -445,6 +525,17 @@
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Delay_3" sap:VirtualizedContainerService.HintSize="450,22" />
       <sap2010:ViewStateData Id="LogMessage_14" sap:VirtualizedContainerService.HintSize="450,91" />
+      <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="450,60" />
+      <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_17" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_34" sap:VirtualizedContainerService.HintSize="264,284">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_2" sap:VirtualizedContainerService.HintSize="414,431" />
       <sap2010:ViewStateData Id="ExcelWriteRange_3" sap:VirtualizedContainerService.HintSize="314,87" />
       <sap2010:ViewStateData Id="LogMessage_8" sap:VirtualizedContainerService.HintSize="314,91" />
       <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="414,342">
@@ -463,15 +554,15 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="WindowScope_1" sap:VirtualizedContainerService.HintSize="414,376" />
-      <sap2010:ViewStateData Id="Sequence_31" sap:VirtualizedContainerService.HintSize="436,882">
+      <sap2010:ViewStateData Id="Sequence_31" sap:VirtualizedContainerService.HintSize="436,1353">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ExcelApplicationScope_5" sap:VirtualizedContainerService.HintSize="450,991" />
-      <sap2010:ViewStateData Id="Sequence_33" sap:VirtualizedContainerService.HintSize="472,1308">
+      <sap2010:ViewStateData Id="ExcelApplicationScope_5" sap:VirtualizedContainerService.HintSize="450,1462" />
+      <sap2010:ViewStateData Id="Sequence_33" sap:VirtualizedContainerService.HintSize="472,1879">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -501,8 +592,8 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="490,2026" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="512,2150">
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="490,2597" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -529,6 +620,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="LogMessage_11" sap:VirtualizedContainerService.HintSize="414,91" />
+      <sap2010:ViewStateData Id="Delay_4" sap:VirtualizedContainerService.HintSize="414,22" />
       <sap2010:ViewStateData Id="ExcelReadRange_5" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="336,183">
         <sap:WorkflowViewStateService.ViewState>
@@ -538,14 +630,14 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ExcelApplicationScope_8" sap:VirtualizedContainerService.HintSize="414,292" />
-      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="436,547">
+      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="436,609">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="442,616">
+      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="442,678">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -553,29 +645,31 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="468,1535" />
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="468,1597" />
       <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="416,60" />
       <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="416,60" />
       <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="416,60" />
-      <sap2010:ViewStateData Id="LogMessage_7" sap:VirtualizedContainerService.HintSize="416,91" />
+      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="416,60" />
+      <sap2010:ViewStateData Id="ReadTextFile_1" sap:VirtualizedContainerService.HintSize="416,59" />
+      <sap2010:ViewStateData Id="LogMessage_17" sap:VirtualizedContainerService.HintSize="416,91" />
       <sap2010:ViewStateData Id="SendOutlookMail_1" sap:VirtualizedContainerService.HintSize="314,145" />
-      <sap2010:ViewStateData Id="Sequence_28" sap:VirtualizedContainerService.HintSize="336,269">
+      <sap2010:ViewStateData Id="Sequence_38" sap:VirtualizedContainerService.HintSize="336,269">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CommentOut_1" sap:VirtualizedContainerService.HintSize="416,347" />
+      <sap2010:ViewStateData Id="CommentOut_3" sap:VirtualizedContainerService.HintSize="416,347" />
       <sap2010:ViewStateData Id="LogMessage_5" sap:VirtualizedContainerService.HintSize="416,91" />
-      <sap2010:ViewStateData Id="Sequence_27" sap:VirtualizedContainerService.HintSize="438,1033">
+      <sap2010:ViewStateData Id="Sequence_27" sap:VirtualizedContainerService.HintSize="438,1232">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="468,1181" />
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="468,1380" />
       <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="200,51">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -615,6 +709,22 @@
             <av:Point x:Key="ShapeLocation">260,104.5</av:Point>
             <av:Size x:Key="ShapeSize">200,51</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">360,155.5 360,184.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_39" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_12">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">480,324.02</av:Point>
+            <av:Size x:Key="ShapeSize">200,51</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
