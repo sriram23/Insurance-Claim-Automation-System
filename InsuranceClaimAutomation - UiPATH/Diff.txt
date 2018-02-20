@@ -1,0 +1,6 @@
+Dear {0},
+We have received your claim on Policy Number: {1}.
+Since your claim amount is too higher to the cost estimation, we have declined your claim request.
+
+Thankyou,
+Assessment Bot

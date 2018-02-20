@@ -1,0 +1,6 @@
+Dear {0},
+Your claim request on policy number: {1} has been accepted and the claim amount of Rs. {2} has been approved.
+To withdraw your claim please reply to this mail within two days from now.
+
+Thankyou,
+Assessment Bot

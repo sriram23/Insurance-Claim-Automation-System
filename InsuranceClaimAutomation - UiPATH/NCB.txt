@@ -1,0 +1,8 @@
+Dear {0},
+We have received your claim request on your policy number: {1}.
+But your NCB value is greater than our allowed NCB.
+Your NCB Value: {2} 
+So, we forward your claim to our Higher Officials for their considerations.
+
+Thankyou,
+Assessment bot.
