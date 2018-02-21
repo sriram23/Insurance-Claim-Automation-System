@@ -1,3 +1,0 @@
-Hello {0},
-Your Claim request is in progress
-
