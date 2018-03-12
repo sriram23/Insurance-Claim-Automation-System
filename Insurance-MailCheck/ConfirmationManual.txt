@@ -1,0 +1,18 @@
+Hi {0},
+This mail is to confirm your claim on your policy number: {1}.
+Claim Details:
+_______________________________________________________
+Policy Number:			 {1}
+Policy Holder Name: 		{0}
+Vehicle Details: 			{2} {3} {4}
+Vehicle Number:			{5}
+Claim Amount: 			{6}
+Damage Sevearity: 			{7}
+Adjuster:				{8}
+Solisitor: 				{9}
+_______________________________________________________
+Final Claim Amount:		{10}
+_______________________________________________________
+
+Regards,
+Insurance Bot
