@@ -1,8 +1,24 @@
 Dear {0},
 We have received your claim request on your policy number: {1}.
 But your NCB value is greater than our allowed NCB.
+______________________________________________________________________________
 Your NCB Value: {2} 
+______________________________________________________________________________
 So, we forward your claim to our Higher Officials for their considerations.
 
-Thankyou,
+______________________________________________________________________________
+Your Policy Details:
+______________________________________________________________________________
+
+Policy Number:			{1}
+Policy Holder Name:		{0}
+Vehicle Details:			{3} {4} {5}
+Vehicle Number:			{6}
+Workshop Amount: 		{7}
+NCB				{2}
+Damage Sevearity: 			{8}
+Adjuster:				{9}
+Solisitor: 				{10}
+_______________________________________________________________________________
+Thank you,
 Assessment bot.

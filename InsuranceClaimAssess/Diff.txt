@@ -2,5 +2,18 @@ Dear {0},
 We have received your claim on Policy Number: {1}.
 Since your claim amount is too higher to the cost estimation, we have declined your claim request.
 
+_______________________________________________________________________
+Claim Details:				         		
+_______________________________________________________________________
+Policy Number:			{1}			
+Policy Holder Name: 		{0}			
+Vehicle Details: 			{2} {3} {4}		
+Vehicle Number:			{5}			
+Workshop Amount: 		{6}			
+Damage Sevearity: 			{7}			
+Adjuster:				{8}			
+Solisitor: 				{9}			
+_______________________________________________________________________
+
 Thankyou,
 Assessment Bot

@@ -2,5 +2,18 @@ Dear {0},
 We have received your claim request on Policy Number: {1}.
 But your claim amount is higher than the market value of your vehicle. So, we have declined your claim request.
 
+_________________________________________________________________________
+Claim Details:				         
+_________________________________________________________________________
+Policy Number:			{1}
+Policy Holder Name: 		{0}
+Vehicle Details: 			{2} {3} {4}
+Vehicle Number:			{5}
+Workshop Amount: 		{6}
+Damage Sevearity: 			{7}
+Adjuster:				{8}
+Solisitor: 				{9}
+__________________________________________________________________________
+
 Thankyou,
 Assessment Bot

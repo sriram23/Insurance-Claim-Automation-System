@@ -1,6 +1,22 @@
 Dear {0},
 Your claim request on policy number: {1} has been accepted and the claim amount of Rs. {2} has been approved.
 To withdraw your claim please reply to this mail within two days from now.
+_______________________________________________________
+Your Claim Details
+_______________________________________________________
+
+Policy Number:                                                  {1}
+Policy Holder Name:                                        {0}
+Vehicle Details:                                                 {3} {4} {5}
+Vehicle Number:                                               {6}
+Damage Sevearity:                                           {7}
+Adjuster:                                                             {8}
+Solisitor:                                                              {9}
+_______________________________________________________
+Final Claim Amount:                                      {2}
+_______________________________________________________
+
+Note: Please reply with "Yes" or "No" alone. Since, this process is automated using a bot, we cannot process any other words.
 
 Thankyou,
 Assessment Bot
