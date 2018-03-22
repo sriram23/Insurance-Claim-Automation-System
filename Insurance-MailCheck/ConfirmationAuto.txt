@@ -1,13 +1,14 @@
 Hi {0},
 This mail is to confirm your claim on your policy number: {1}.
+Since we have not received any response from you regarding the withdrawal option mail, we have automatically approved your request.
 _______________________________________________________
-Claim Details:
+Claim Details:				         
 _______________________________________________________
-Policy Number:			{1}
+Policy Number:			 {1}
 Policy Holder Name: 		{0}
-Vehicle Details: 			{2} 
+Vehicle Details: 			{2}
 Vehicle Number:			{3}
-Workshop Amount: 		{4}
+Claim Amount: 			{4}
 Damage Sevearity: 			{5}
 Adjuster:				{6}
 Solisitor: 				{7}

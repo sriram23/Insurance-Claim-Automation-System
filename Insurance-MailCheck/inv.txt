@@ -1,0 +1,12 @@
+Dear Admin,
+We have got a reply from client with invalid content. The bot was not able to process the request. See the data base for further details.
+_______________________________________________________________________________
+Mail ID:			{0}
+Policy Number:		{1}
+Reply Received:		
+ ___________________________________________________________________________
+{2}
+ ___________________________________________________________________________
+_______________________________________________________________________________
+Regards,
+Assessment Bot
