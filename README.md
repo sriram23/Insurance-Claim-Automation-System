@@ -1,7 +1,9 @@
 # Insurance Claim Assessment and Approval Automation
 Domain: **Robotic Process Automation**
 
-Tools Used: **UiPATH - Community Edition**
+Tools Used: **UiPATH - Studio**
+            **UiPATH - Robot**
+            **Task Scheduler**
 
 ## Team Members
 - Prabadevi.M - 14CSB04
