@@ -4,16 +4,16 @@ Since we have not received any response from you regarding the withdrawal option
 _______________________________________________________
 Claim Details:				         
 _______________________________________________________
-Policy Number:			 {1}
-Policy Holder Name: 		{0}
-Vehicle Details: 			{2}
-Vehicle Number:			{3}
-Claim Amount: 			{4}
-Damage Sevearity: 			{5}
-Adjuster:				{6}
-Solisitor: 				{7}
+Policy Number:                                                  {1}
+Policy Holder Name:                                        {0}
+Vehicle Details:                                                 {2}
+Vehicle Number:                                               {3}
+Claim Amount:                                                  {4}
+Damage Sevearity:                                           {5}
+Adjuster:                                                              {6}
+Solisitor:                                                               {7}
 _______________________________________________________
-Final Claim Amount:		{8}
+Final Claim Amount:                                       {8}
 _______________________________________________________
 
 Regards,

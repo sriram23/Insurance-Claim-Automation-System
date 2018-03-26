@@ -10,15 +10,15 @@ ______________________________________________________________________________
 Your Policy Details:
 ______________________________________________________________________________
 
-Policy Number:			{1}
-Policy Holder Name:		{0}
-Vehicle Details:			{3} {4} {5}
-Vehicle Number:			{6}
-Workshop Amount: 		{7}
-NCB				{2}
-Damage Sevearity: 			{8}
-Adjuster:				{9}
-Solisitor: 				{10}
+Policy Number:                                                {1}
+Policy Holder Name:                                      {0}
+Vehicle Details:                                               {3} {4} {5}
+Vehicle Number:                                             {6}
+Workshop Amount:                                      {7}
+NCB:                                                                    {2}
+Damage Sevearity:                                        {8}
+Adjuster:                                                           {9}
+Solisitor:                                                            {10}
 _______________________________________________________________________________
 Thank you,
 Assessment bot.
