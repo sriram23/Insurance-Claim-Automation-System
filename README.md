@@ -1,8 +1,8 @@
 # Insurance Claim Assessment and Approval Automation
 Domain: **Robotic Process Automation**
 
-Tools Used: **UiPATH - Studio**
-            **UiPATH - Robot**
+Tools Used: **UiPATH - Studio**,
+            **UiPATH - Robot** and
             **Task Scheduler**
 
 ## Team Members
@@ -12,10 +12,18 @@ Tools Used: **UiPATH - Studio**
 - Sudharshan.T.R - 14CSB32
 
 ### Steps
-- Fetch Query form core system
-- Save the query to a spreadsheet
+###### Assessment
+- Fetch data form core system
+- Save the data to a spreadsheet
 - Execute the Assessment Rules
+- Notification to Benificiary (Claim Confirmation)
 - Update the status in excel
-- Approval process
+- Update the status in Database
+
+###### Approval process
+- Fetch data from core system
+- Save data in a spreadsheet
+- Wait for Beneficiary reply
+- Decide on approval (By beneficiary reply and Timeout)
 - Update status in excel and in core system
-- Notification to Beneficiary
+- Notification to Beneficiary (Final Confirmation)
